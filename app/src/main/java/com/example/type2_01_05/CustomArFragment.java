@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CustomArFragment extends ArFragment {
-    private static final String SAMPLE_IMAGE_DATABASE = "type2.imgdb";
+    private static final String SAMPLE_IMAGE_DATABASE = "type2V2.imgdb";
     private static final String TAG = "AugmentedImageFragment";
 
     @Override

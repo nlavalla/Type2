@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,10 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
-import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
-import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
@@ -25,7 +24,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 
 import java.util.Collection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ExternalTexture texture;
     private MediaPlayer mediaPlayer;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ModelRenderable renderable;
     private boolean isImageDetected = false;
    private AnchorNode anchorNode;
+   private Button bouton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.arFragment);
 
         scene = arFragment.getArSceneView().getScene();
-
-
+        bouton=(Button)findViewById(R.id.button);
+        bouton.setOnClickListener(this);
         scene.addOnUpdateListener(this::onUpdate);
 
     }
+
+
 
     private void onUpdate(FrameTime frameTime) {
 
@@ -60,21 +62,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (AugmentedImage image : augmentedImages) {
+            Log.d("passe", image.getName());
 
             switch (image.getTrackingState()) {
 
                 case TRACKING:
 
+
                 if (image.getName().equals("type2.png")) {
                     Log.d("MyApp", image.getName());
                     isImageDetected = true;
-                    addVideo(R.raw.version2);
+                    addVideo(R.raw.pluie);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                     break;
                 } else if (image.getName().equals("type2_2.png")) {
                     isImageDetected = true;
                     Log.d("MyApp", image.getName());
-                    addVideo1(R.raw.type2);
+                    addVideo(R.raw.desert);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                 }
@@ -116,28 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-    private void addVideo1(int video) {
 
-        texture = new ExternalTexture();
-
-        mediaPlayer = MediaPlayer.create(this, video);
-        mediaPlayer.setSurface(texture.getSurface());
-        mediaPlayer.setLooping(true);
-
-        ModelRenderable
-                .builder()
-                .setSource(this, Uri.parse("video_screen2.sfb"))
-                .build()
-                .thenAccept(modelRenderable -> {
-                    modelRenderable.getMaterial().setExternalTexture("videoTexture1",
-                            texture);
-                    modelRenderable.getMaterial().setFloat4("keyColor",
-                            new Color(0.01843f, 1f, 0.098f));
-
-                    renderable = modelRenderable;
-                });
-
-    }
 
     private void playVideo(Anchor anchor, float extentX, float extentZ) {
          mediaPlayer.start();
@@ -156,4 +139,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+            scene.onRemoveChild(anchorNode);
+    }
 }
