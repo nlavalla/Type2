@@ -25,7 +25,7 @@ import com.google.ar.sceneform.rendering.ModelRenderable;
 
 import java.util.Collection;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private ExternalTexture texture;
     private MediaPlayer mediaPlayer;
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ModelRenderable renderable;
     private boolean isImageDetected = false;
    private AnchorNode anchorNode;
+   private Button bouton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         scene = arFragment.getArSceneView().getScene();
 
-
+        bouton=(Button)findViewById(R.id.button);
+        bouton.setOnTouchListener(this);
         scene.addOnUpdateListener(this::onUpdate);
 
+    }
+    public boolean onTouch(View v,MotionEvent event){
+            scene.close();
+        scene = arFragment.getArSceneView().getScene();
+        scene.addOnUpdateListener(this::onUpdate);
+
+        return true;
     }
 
     private void onUpdate(FrameTime frameTime) {
