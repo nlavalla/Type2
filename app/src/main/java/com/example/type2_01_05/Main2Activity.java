@@ -137,7 +137,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        scene.onRemoveChild(anchorNode);
         Intent activite2= new Intent(Main2Activity.this, MainActivity.class);
         startActivity(activite2);
     }
