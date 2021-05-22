@@ -22,10 +22,11 @@ import java.io.InputStream;
 public class CustomArFragment extends ArFragment {
     private static final String SAMPLE_IMAGE_DATABASE = "type2V2.imgdb";
     private static final String TAG = "AugmentedImageFragment";
+    private Session session;
 
     @Override
     protected Config getSessionConfiguration(Session session) {
-
+        this.session=session;
         getPlaneDiscoveryController().setInstructionView(null);
         Config config = new Config(session);
         // Use setFocusMode to configure auto-focus.
@@ -55,4 +56,6 @@ public class CustomArFragment extends ArFragment {
 
         return frameLayout;
     }
+
+
 }

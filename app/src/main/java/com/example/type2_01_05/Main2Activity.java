@@ -1,25 +1,19 @@
 package com.example.type2_01_05;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Session;
-import com.google.ar.core.exceptions.UnavailableApkTooOldException;
-import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
-import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
-import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
@@ -28,27 +22,25 @@ import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.ExternalTexture;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
-
 import java.util.Collection;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
-    private ExternalTexture texture;
+public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
+     private ExternalTexture texture;
     private MediaPlayer mediaPlayer;
     private CustomArFragment arFragment;
     private Scene scene;
     private ModelRenderable renderable;
     private boolean isImageDetected = false;
-   private AnchorNode anchorNode;
-   private Button bouton;
-   private Session session = null;
+    private AnchorNode anchorNode;
+    private Button bouton;
+    private Session session = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         arFragment = (CustomArFragment)
                 getSupportFragmentManager().findFragmentById(R.id.arFragment);
 
@@ -79,20 +71,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case TRACKING:
 
 
-                if (image.getName().equals("type2.png")) {
-                    Log.d("MyApp", image.getName());
-                    isImageDetected = true;
-                    addVideo(R.raw.pluie);
-                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
-                    break;
-                } else if (image.getName().equals("type2_2.png")) {
-                    isImageDetected = true;
-                    Log.d("MyApp", image.getName());
-                    addVideo(R.raw.desert);
-                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+                    if (image.getName().equals("type2.png")) {
+                        Log.d("MyApp", image.getName());
+                        isImageDetected = true;
+                        addVideo(R.raw.pluie);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+                        break;
+                    } else if (image.getName().equals("type2_2.png")) {
+                        isImageDetected = true;
+                        Log.d("MyApp", image.getName());
+                        addVideo(R.raw.desert);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
-                }
-                break;
+                    }
+                    break;
 
                 case STOPPED:
                     augmentedImages.remove(image);
@@ -127,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void playVideo(Anchor anchor, float extentX, float extentZ) {
-         mediaPlayer.start();
+        mediaPlayer.start();
 
-         anchorNode = new AnchorNode(anchor);
+        anchorNode = new AnchorNode(anchor);
 
         texture.getSurfaceTexture().setOnFrameAvailableListener(surfaceTexture -> {
             anchorNode.setRenderable(renderable);
@@ -145,8 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-            scene.onRemoveChild(anchorNode);
-        Intent activite2= new Intent(MainActivity.this, Main2Activity.class);
+        scene.onRemoveChild(anchorNode);
+        Intent activite2= new Intent(Main2Activity.this, MainActivity.class);
         startActivity(activite2);
     }
 }
+
