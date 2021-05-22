@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
-import com.google.ar.core.Session;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
@@ -33,7 +33,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private boolean isImageDetected = false;
     private AnchorNode anchorNode;
     private Button bouton;
-    private Session session = null;
+    private ImageView fitToScanView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         bouton=(Button)findViewById(R.id.button);
         bouton.setOnClickListener(this);
         scene.addOnUpdateListener(this::onUpdate);
+        fitToScanView = findViewById(R.id.image_view_fit_to_scan);
 
     }
 
@@ -69,10 +71,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             switch (image.getTrackingState()) {
 
                 case TRACKING:
-
+                    fitToScanView.setVisibility(View.GONE);
 
                     if (image.getName().equals("type2.png")) {
-                        Log.d("MyApp", image.getName());
+                        Log.d("MyApp", "track");
                         isImageDetected = true;
                         addVideo(R.raw.pluie);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
@@ -137,6 +139,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        arFragment.onDestroy();
+        mediaPlayer.reset();
         Intent activite2= new Intent(Main2Activity.this, MainActivity.class);
         startActivity(activite2);
     }

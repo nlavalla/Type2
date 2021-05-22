@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
-import com.google.ar.core.Session;
-import com.google.ar.core.exceptions.UnavailableApkTooOldException;
-import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
-import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
-import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Scene;
@@ -41,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isImageDetected = false;
    private AnchorNode anchorNode;
    private Button bouton;
-   private Session session = null;
+    private ImageView fitToScanView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         arFragment = (CustomArFragment)
                 getSupportFragmentManager().findFragmentById(R.id.arFragment);
+        fitToScanView = findViewById(R.id.image_view_fit_to_scan);
 
         scene = arFragment.getArSceneView().getScene();
         bouton=(Button)findViewById(R.id.button);
@@ -77,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 case TRACKING:
 
+                    fitToScanView.setVisibility(View.GONE);
 
                 if (image.getName().equals("type2.png")) {
                     Log.d("MyApp", image.getName());
@@ -144,6 +142,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        arFragment.onDestroy();
+        mediaPlayer.reset();
+
         Intent activite2= new Intent(MainActivity.this, Main2Activity.class);
         startActivity(activite2);
     }
