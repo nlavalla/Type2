@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
@@ -73,22 +74,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (image.getTrackingState()) {
 
                 case TRACKING:
+                    isImageDetected = true;
 
                     fitToScanView.setVisibility(View.GONE);
 
                 if (image.getName().equals("type2.png")) {
                     Log.d("MyApp", image.getName());
-                    isImageDetected = true;
                     addVideo(R.raw.pluie);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                     break;
                 } else if (image.getName().equals("type2_2.png")) {
-                    isImageDetected = true;
                     Log.d("MyApp", image.getName());
                     addVideo(R.raw.desert);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                 }
+                  else if (image.getName().equals("voiture.png")) {
+                Log.d("MyApp", image.getName());
+                addVideo(R.raw.voiture);
+                playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                 }
                 break;
 
                 case STOPPED:
@@ -142,10 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        arFragment.onDestroy();
-        mediaPlayer.reset();
-
+        if (isImageDetected == true) {
+            arFragment.onDestroy();
+            mediaPlayer.reset();
+        }
         Intent activite2= new Intent(MainActivity.this, Main2Activity.class);
         startActivity(activite2);
+        Animatoo.animateFade(this);
+
     }
 }

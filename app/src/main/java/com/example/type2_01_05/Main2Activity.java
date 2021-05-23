@@ -1,7 +1,5 @@
 package com.example.type2_01_05;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
@@ -22,10 +24,12 @@ import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.ExternalTexture;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 
+
 import java.util.Collection;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener{
-     private ExternalTexture texture;
+
+    private ExternalTexture texture;
     private MediaPlayer mediaPlayer;
     private CustomArFragment arFragment;
     private Scene scene;
@@ -35,21 +39,20 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     private Button bouton;
     private ImageView fitToScanView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         arFragment = (CustomArFragment)
                 getSupportFragmentManager().findFragmentById(R.id.arFragment);
+        fitToScanView = findViewById(R.id.image_view_fit_to_scan);
 
         scene = arFragment.getArSceneView().getScene();
         bouton=(Button)findViewById(R.id.button);
         bouton.setOnClickListener(this);
         scene.addOnUpdateListener(this::onUpdate);
-        fitToScanView = findViewById(R.id.image_view_fit_to_scan);
 
     }
 
@@ -71,18 +74,24 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             switch (image.getTrackingState()) {
 
                 case TRACKING:
+                    isImageDetected = true;
+
                     fitToScanView.setVisibility(View.GONE);
 
                     if (image.getName().equals("type2.png")) {
-                        Log.d("MyApp", "track");
-                        isImageDetected = true;
+                        Log.d("MyApp", image.getName());
                         addVideo(R.raw.pluie);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                         break;
                     } else if (image.getName().equals("type2_2.png")) {
-                        isImageDetected = true;
                         Log.d("MyApp", image.getName());
                         addVideo(R.raw.desert);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("voiture.png")) {
+                        Log.d("MyApp", image.getName());
+                        addVideo(R.raw.voiture);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }
@@ -139,10 +148,13 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        arFragment.onDestroy();
-        mediaPlayer.reset();
+        if (isImageDetected == true) {
+            arFragment.onDestroy();
+            mediaPlayer.reset();
+        }
         Intent activite2= new Intent(Main2Activity.this, MainActivity.class);
         startActivity(activite2);
+        Animatoo.animateFade(this);
+
     }
 }
-

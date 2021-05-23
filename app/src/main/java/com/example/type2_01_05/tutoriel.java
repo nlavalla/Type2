@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+
 public class tutoriel extends AppCompatActivity implements View.OnClickListener{
     Button bouton=null;
     @Override
@@ -19,5 +21,7 @@ public class tutoriel extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         Intent activite2= new Intent(tutoriel.this, MainActivity.class);
         startActivity(activite2);
+        Animatoo.animateSlideRight(this);
         }
+
 }

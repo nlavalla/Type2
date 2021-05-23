@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Type2_01_05</string>
+    <string name="app_name">Journey</string>
     <string name="fit_image_to_scan">Image à scanner</string>
 
     <string name="button">Image suivante</string>
-    <string name="titreTuto">Bonjour et bienvenu à notre exposition interacitve</string>
-    <string name="explication">A chaque oeuvre vous devrez viser l\'oeuvre avec la camera de l\'appareil photo </string>
+    <string name="titreTuto">Bienvenu à notre exposition interactive: Journey</string>
+    <string name="explication">Pour chaque oeuvre, viser l\'oeuvre avec la camera de l\'appareil photo </string>
     <string name="explication2">Attention à ne pas être trop près ni trop loin de  l\'image essayer de rentrer dans le cadre </string>
     <string name="explication3">A chaque oeuvre vous aurez une animation et une musique qui se déclanchera </string>
     <string name="explication4"> Après chaque oeuvre appuyer sur la fleche en haut à droite</string>
