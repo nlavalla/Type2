@@ -21,7 +21,7 @@ public class tutoriel extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         Intent activite2= new Intent(tutoriel.this, MainActivity.class);
         startActivity(activite2);
-        Animatoo.animateSlideRight(this);
+        Animatoo.animateSlideLeft(this);
         }
 
 }
