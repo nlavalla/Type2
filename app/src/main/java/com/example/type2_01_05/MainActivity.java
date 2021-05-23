@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     addVideo(R.raw.pluie);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                     break;
-                } else if (image.getName().equals("type2_2.png")) {
+                } else if (image.getName().equals("desert.png")) {
                     Log.d("MyApp", image.getName());
                     addVideo(R.raw.desert);
                     playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
@@ -95,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                  }
+                else if (image.getName().equals("jungle.png")) {
+                    Log.d("MyApp", image.getName());
+                    addVideo1(R.raw.jungle);
+                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                }
                 break;
 
                 case STOPPED:
@@ -122,6 +128,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             texture);
                     modelRenderable.getMaterial().setFloat4("keyColor",
                             new Color(0.01843f, 1f, 0.098f));
+
+                    renderable = modelRenderable;
+                });
+
+    } private void addVideo1(int video) {
+
+        texture = new ExternalTexture();
+
+        mediaPlayer = MediaPlayer.create(this, video);
+        mediaPlayer.setSurface(texture.getSurface());
+        mediaPlayer.setLooping(true);
+
+        ModelRenderable
+                .builder()
+                .setSource(this, Uri.parse("video_screen.sfb"))
+                .build()
+                .thenAccept(modelRenderable -> {
+                    modelRenderable.getMaterial().setExternalTexture("videoTexture",
+                            texture);
+                    modelRenderable.getMaterial().setFloat4("keyColor",
+                            new Color(0f, 0f, 1f));
 
                     renderable = modelRenderable;
                 });

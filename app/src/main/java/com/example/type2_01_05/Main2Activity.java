@@ -83,7 +83,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                         addVideo(R.raw.pluie);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                         break;
-                    } else if (image.getName().equals("type2_2.png")) {
+                    } else if (image.getName().equals("desert.png")) {
                         Log.d("MyApp", image.getName());
                         addVideo(R.raw.desert);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
@@ -92,6 +92,12 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     else if (image.getName().equals("voiture.png")) {
                         Log.d("MyApp", image.getName());
                         addVideo(R.raw.voiture);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("jungle.png")) {
+                        Log.d("MyApp", image.getName());
+                        addVideo(R.raw.jungle);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }
