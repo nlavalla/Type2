@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                         break;
                     } else if (image.getName().equals("desert.png")) {
-                        addVideo(R.raw.desert);
+                        addVideobleu(R.raw.desert);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }
@@ -99,7 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         addVideo(R.raw.glacier);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
-                    }else if (image.getName().equals("venise.png")) {
+                    }
+                    else if (image.getName().equals("venise.jpg")) {
                         addVideo(R.raw.venise);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
@@ -131,6 +133,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             texture);
                     modelRenderable.getMaterial().setFloat4("keyColor",
                             new Color(0.01843f, 1f, 0.098f));
+
+                    renderable = modelRenderable;
+                });
+
+    }
+    private void addVideobleu(int video) {
+
+        texture = new ExternalTexture();
+
+        mediaPlayer = MediaPlayer.create(this, video);
+        mediaPlayer.setSurface(texture.getSurface());
+        mediaPlayer.setLooping(true);
+
+        ModelRenderable
+                .builder()
+                .setSource(this, Uri.parse("video_screen.sfb"))
+                .build()
+                .thenAccept(modelRenderable -> {
+                    modelRenderable.getMaterial().setExternalTexture("videoTexture",
+                            texture);
+                    modelRenderable.getMaterial().setFloat4("keyColor",
+                            new Color(0f, 0f, 1f));
 
                     renderable = modelRenderable;
                 });
