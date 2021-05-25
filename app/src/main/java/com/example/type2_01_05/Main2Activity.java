@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -69,7 +68,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
 
         for (AugmentedImage image : augmentedImages) {
-            Log.d("passe", image.getName());
 
             switch (image.getTrackingState()) {
 
@@ -79,25 +77,30 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
                     fitToScanView.setVisibility(View.GONE);
 
                     if (image.getName().equals("type2.png")) {
-                        Log.d("MyApp", image.getName());
                         addVideo(R.raw.pluie);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
                         break;
                     } else if (image.getName().equals("desert.png")) {
-                        Log.d("MyApp", image.getName());
                         addVideo(R.raw.desert);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }
                     else if (image.getName().equals("voiture.png")) {
-                        Log.d("MyApp", image.getName());
                         addVideo(R.raw.voiture);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }
                     else if (image.getName().equals("jungle.png")) {
-                        Log.d("MyApp", image.getName());
                         addVideo(R.raw.jungle);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("glacier.png")) {
+                        addVideo(R.raw.glacier);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }else if (image.getName().equals("venise.png")) {
+                        addVideo(R.raw.venise);
                         playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
 
                     }

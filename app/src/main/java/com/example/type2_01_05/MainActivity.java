@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Scene scene;
     private ModelRenderable renderable;
     private boolean isImageDetected = false;
-   private AnchorNode anchorNode;
-   private Button bouton;
+    private AnchorNode anchorNode;
+    private Button bouton;
     private ImageView fitToScanView;
 
     @Override
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         for (AugmentedImage image : augmentedImages) {
-            Log.d("passe", image.getName());
 
             switch (image.getTrackingState()) {
 
@@ -78,30 +76,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     fitToScanView.setVisibility(View.GONE);
 
-                if (image.getName().equals("type2.png")) {
-                    Log.d("MyApp", image.getName());
-                    addVideo(R.raw.pluie);
-                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+                    if (image.getName().equals("type2.png")) {
+                        addVideo(R.raw.pluie);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+                        break;
+                    } else if (image.getName().equals("desert.png")) {
+                        addVideo(R.raw.desert);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("voiture.png")) {
+                        addVideo(R.raw.voiture);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("jungle.png")) {
+                        addVideo(R.raw.jungle);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
+                    else if (image.getName().equals("glacier.png")) {
+                        addVideo(R.raw.glacier);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }else if (image.getName().equals("venise.png")) {
+                        addVideo(R.raw.venise);
+                        playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
+
+                    }
                     break;
-                } else if (image.getName().equals("desert.png")) {
-                    Log.d("MyApp", image.getName());
-                    addVideo(R.raw.desert);
-                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
-
-                }
-                  else if (image.getName().equals("voiture.png")) {
-                Log.d("MyApp", image.getName());
-                addVideo(R.raw.voiture);
-                playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
-
-                 }
-                else if (image.getName().equals("jungle.png")) {
-                    Log.d("MyApp", image.getName());
-                    addVideo1(R.raw.jungle);
-                    playVideo(image.createAnchor(image.getCenterPose()), image.getExtentX(), image.getExtentZ());
-
-                }
-                break;
 
                 case STOPPED:
                     augmentedImages.remove(image);
@@ -132,34 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     renderable = modelRenderable;
                 });
 
-    } private void addVideo1(int video) {
-
-        texture = new ExternalTexture();
-
-        mediaPlayer = MediaPlayer.create(this, video);
-        mediaPlayer.setSurface(texture.getSurface());
-        mediaPlayer.setLooping(true);
-
-        ModelRenderable
-                .builder()
-                .setSource(this, Uri.parse("video_screen.sfb"))
-                .build()
-                .thenAccept(modelRenderable -> {
-                    modelRenderable.getMaterial().setExternalTexture("videoTexture",
-                            texture);
-                    modelRenderable.getMaterial().setFloat4("keyColor",
-                            new Color(0f, 0f, 1f));
-
-                    renderable = modelRenderable;
-                });
-
     }
 
 
     private void playVideo(Anchor anchor, float extentX, float extentZ) {
-         mediaPlayer.start();
+        mediaPlayer.start();
 
-         anchorNode = new AnchorNode(anchor);
+        anchorNode = new AnchorNode(anchor);
 
         texture.getSurfaceTexture().setOnFrameAvailableListener(surfaceTexture -> {
             anchorNode.setRenderable(renderable);

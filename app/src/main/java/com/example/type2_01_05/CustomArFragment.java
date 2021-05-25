@@ -1,9 +1,6 @@
 package com.example.type2_01_05;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +19,9 @@ import java.io.InputStream;
 public class CustomArFragment extends ArFragment {
     private static final String SAMPLE_IMAGE_DATABASE = "type2V4.imgdb";
     private static final String TAG = "AugmentedImageFragment";
-    private Session session;
 
     @Override
     protected Config getSessionConfiguration(Session session) {
-        this.session=session;
         getPlaneDiscoveryController().setInstructionView(null);
         Config config = new Config(session);
         // Use setFocusMode to configure auto-focus.
@@ -38,7 +33,6 @@ public class CustomArFragment extends ArFragment {
         try (InputStream is = getContext().getAssets().open(SAMPLE_IMAGE_DATABASE)) {
             aid = AugmentedImageDatabase.deserialize(session, is);
         } catch (IOException e) {
-            Log.e(TAG, "IO exception loading augmented image database.", e);
         }
         config.setAugmentedImageDatabase(aid);
         getArSceneView().setupSession(session);
